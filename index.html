@@ -23,11 +23,11 @@
 
     </div>
     <div class="container">
-      <img src="images/monitor2.png">
+      <img src="/images/monitor2.png">
       <div class="container-show">
-        <img src="images/fb.png" id="facebook" class="tv-hidden" width="98%">
-        <img src="images/google3.png" id="google" class="tv-hidden" width="98%">
-        <img src="images/sh3.png" id="sh" class="tv-hidden" width="98%">
+        <img src="/images/fb.png" id="facebook" class="tv-hidden" width="98%">
+        <img src="/images/google3.png" id="google" class="tv-hidden" width="98%">
+        <img src="/images/sh3.png" id="sh" class="tv-hidden" width="98%">
       </div>
     </div>
   </div>
@@ -35,7 +35,7 @@
   <img src="" id="img" height="300px">
   <div class="title">automatic change pics in skew monitor:</div>
   <div class="container container-rotate-show">
-    <img src="images/monitor2.png">
+    <img src="/images/monitor2.png">
     <div class="container-show">
       <img src="" id="imageTV" :class="changeCounterImageTV" width="79%">
   </div>
@@ -43,7 +43,7 @@
 </div>
 <script>
   let colors = ["green", "red", "yellow", "grey", "blue"];
-  const imagesTV = ["images/fb.png","images/google3.png","images/sh3.png"];
+  const imagesTV = ["/images/fb.png","/images/google3.png","/images/sh3.png"];
   let vm = new Vue({
     el: '#app',
     data() {
