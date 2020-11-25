@@ -7,10 +7,13 @@
 </head>
 <body>
 <div id="app">
-  <button @click="changeColorLetters" class="title">You can change color text. PRESS here</button>
-  <div class="colorText green">Do you like animated pictures?</div>
+  <p id="textScroll">Scroll</p>
+  <img src="images/monitor2.png" id="scrollAnime">
   <div class="title">automatic color change:</div>
   <div class="animeText" :class="colorTextAnime">{{currentColor}}</div>
+  <div class="title">You can change color text:</div>
+  <button @click="changeColorLetters" class="title">PRESS</button>
+  <div class="colorText green">Do you want to change color? I wait when you press button</div>
   <div class="tv">
     <div class="title">Links in TV (hover):</div>
     <div>
@@ -23,27 +26,30 @@
 
     </div>
     <div class="container">
-      <img src="/images/monitor2.png">
+      <img src="images/monitor2.png">
       <div class="container-show">
-        <img src="/images/fb.png" id="facebook" class="tv-hidden" width="98%">
-        <img src="/images/google3.png" id="google" class="tv-hidden" width="98%">
-        <img src="/images/sh3.png" id="sh" class="tv-hidden" width="98%">
+        <img src="images/fb.png" id="facebook" class="tv-hidden" width="98%">
+        <img src="images/google3.png" id="google" class="tv-hidden" width="98%">
+        <img src="images/sh3.png" id="sh" class="tv-hidden" width="98%">
       </div>
     </div>
   </div>
   <div class="title">automatic pics change:</div>
   <img src="" id="img" height="300px">
   <div class="title">automatic change pics in skew monitor:</div>
-  <div class="container container-rotate-show">
-    <img src="/images/monitor2.png">
-    <div class="container-show">
-      <img src="" id="imageTV" :class="changeCounterImageTV" width="79%">
+  <div class="container-rotate-show">
+    <!--  <img src="images/monitor2.png"> -->
+    <div class="container-show-TV">
+      <img src="" id="imageTV" :class="changeCounterImageTV">
+    </div>
   </div>
+
+
 </div>
-</div>
+
 <script>
   let colors = ["green", "red", "yellow", "grey", "blue"];
-  const imagesTV = ["/images/fb.png","/images/google3.png","/images/sh3.png"];
+  const imagesTV = ["images/fb.png", "images/google3.png", "images/sh3.png"];
   let vm = new Vue({
     el: '#app',
     data() {
@@ -52,7 +58,7 @@
         counter: 0,
         counterAnime: 0,
         currentColor: "green",
-        counterImagesTV:0,
+        counterImagesTV: 0,
       }
     },
     mounted: function () {
@@ -69,7 +75,7 @@
         return colors[this.counterAnime];
       },
       changeCounterImageTV() {
-        if (this.counterImagesTV>=imagesTV.length) {
+        if (this.counterImagesTV >= imagesTV.length) {
           this.counterImagesTV = 0;
         }
         return this.counterImagesTV;
@@ -92,12 +98,10 @@
         text[0].classList.add(colors[this.counter]);
       },
       show(id) {
-        console.log("show");
         let imgLink = document.getElementById(id);
         imgLink.classList.replace("tv-hidden", "tv-show");
       },
       shutDown(id) {
-        console.log("shutDown");
         let imgLink = document.getElementById(id);
         imgLink.classList.replace("tv-show", "tv-hidden");
       },
@@ -128,7 +132,81 @@
 </script>
 
 <script> viewImages(); </script>
+<script>
+  var isScrolling = false;
 
+  window.addEventListener("scroll", throttleScroll, false);
+
+  function throttleScroll(e) {
+    if (isScrolling == false) {
+      window.requestAnimationFrame(function () {
+        dealWithScrolling(e);
+        isScrolling = false;
+      });
+    }
+    isScrolling = true;
+  }
+
+  function dealWithScrolling(e) {
+    console.log("you scrolling");
+    rotateElement("scrollAnime");
+  }
+
+  function rotateElement(id) {
+    // document.body.classList.add("colorOne");
+    let elScroll = document.getElementById(id);
+    elScroll.classList.add("rotate");
+  }
+
+  //  document.addEventListener("DOMContentLoaded", scrolling, false);
+  //    var listItems = document.querySelectorAll("#app ol li");
+  //    var firstBox = document.querySelector("#firstBox");
+  //    var secondBox = document.querySelector("#secondBox");
+
+  //    function scrolling(e) {
+  //      if (isPartiallyVisible(firstBox)) {
+  //        firstBox.classList.add("active");
+
+  // console.log("isPartiallyVisible");
+  //        document.body.classList.add("colorOne");
+  //        document.body.classList.remove("colorTwo");
+  //      } else {
+  //        document.body.classList.remove("colorOne");
+  //        document.body.classList.remove("colorTwo");
+  //      }
+
+  //      if (isFullyVisible(secondBox)) {
+  //        secondBox.classList.add("active");
+  //  console.log("isFullyVisible");
+  //        document.body.classList.add("colorTwo");
+  //        document.body.classList.remove("colorOne");
+  //      }
+
+  //      for (var i = 0; i < listItems.length; i++) {
+  //        var listItem = listItems[i];
+  //        if (isPartiallyVisible(listItem)) {
+  //          listItem.classList.add("active");
+  //        } else {
+  //          listItem.classList.remove("active");
+  //        }
+  //      }
+  //    }
+
+  //    function isPartiallyVisible(el) {
+  //      var elementBoundary = el.getBoundingClientRect();
+  //      var top = elementBoundary.top;
+  //      var bottom = elementBoundary.bottom;
+  //      var height = elementBoundary.height;
+  //      return ((top + height >= 0) && (height + window.innerHeight >= bottom));
+  //    }
+
+  //    function isFullyVisible(el) {
+  //      var elementBoundary = el.getBoundingClientRect();
+  //      var top = elementBoundary.top;
+  //      var bottom = elementBoundary.bottom;
+  //      return ((top >= 0) && (bottom <= window.innerHeight));
+  //    }
+</script>
 <style>
   .colorText, .animeText {
     font-size: 50px;
@@ -197,6 +275,18 @@
     left: 10px;
   }
 
+  .container-show-TV {
+    display: flex;
+    position: absolute;
+    justify-content: center;
+    top: 5px;
+    width: 98%;
+    height: 48%;
+    overflow: hidden;
+    left: 5px;
+    margin: 0px;
+  }
+
   .title {
     font-size: 3em;
     margin-top: 0.5em;
@@ -206,16 +296,31 @@
     margin-left: 20px;
   }
 
-
   .container-rotate-show {
-    position: absolute;
+    position: relative;
+    background: url("images/monitor2.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    overflow: hidden;
     /*top: 10px;*/
-    width: 100%;
+    width: 500px;
     height: 570px;
     left: 10px;
     transform: skewX(-10deg);
   }
 
+
+  .rotate {
+    transform: rotate(30deg);
+    -moz-transform: rotate(30deg); /* Для Firefox */
+    -ms-transform: rotate(15deg); /* Для IE */
+    -webkit-transform: rotate(30deg); /* Для Safari, Chrome, iOS */
+    -o-transform: rotate(30deg); /* Для Opera */
+    /*transform: scaleX(1) translateX(150px);*/
+    opacity: 1;
+    /*color:red;*/
+    transition-duration: 2s;
+  }
 
 </style>
 </body>
